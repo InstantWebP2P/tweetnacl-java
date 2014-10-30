@@ -1071,7 +1071,7 @@ public final class TweetNacl {
 		crypto_stream_xor(c,m,d,n,k);
 		crypto_onetimeauth(c,16,c.length-16, c,32,c.length-32, d - 32, c);
 		
-		for (i = 0; i < 16; i ++) c[i] = 0;
+		///for (i = 0; i < 16; i ++) c[i] = 0;
 		
 		return 0;
 	}
@@ -1087,7 +1087,7 @@ public final class TweetNacl {
 		if (crypto_onetimeauth_verify(c,16,16, c,32,c.length-32, d-32, x) != 0) return -1;
 		crypto_stream_xor(m,c,d,n,k);
 		
-		for (i = 0; i < 32; i ++) m[i] = 0;
+		///for (i = 0; i < 32; i ++) m[i] = 0;
 		
 		return 0;
 	}
