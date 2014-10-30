@@ -536,15 +536,15 @@ public final class TweetNacl {
 	 * @description 
 	 *   Hash algorithm, Implements SHA-512.
 	 * */
-	public static final class Hashing {
+	public static final class Hash {
 
-		private final static String TAG = "Hashing";
+		private final static String TAG = "Hash";
 
 		/*
 		 * @description
 		 *   Returns SHA-512 hash of the message.
 		 * */
-		public static byte[] hash(byte [] message) {
+		public static byte[] sha512(byte [] message) {
 			if (!(message!=null && message.length>0))
 				return null;
 
@@ -554,8 +554,8 @@ public final class TweetNacl {
 
 			return out;
 		}
-		public static byte[] hash(String message) throws UnsupportedEncodingException {
-			return hash(message.getBytes("utf-8"));
+		public static byte[] sha512(String message) throws UnsupportedEncodingException {
+			return sha512(message.getBytes("utf-8"));
 		}
 		
 		/*
