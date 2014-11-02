@@ -28,14 +28,14 @@ int main(int argc, char *argv[]) {
 		nonce[i] = 0x68;
 
 	// messages
-	string m0 = "Helloword, TweetNacl...";
+	string m0 = "Helloword, Am Tom ...";
 
 	// cipher A -> B
 	cout << "streess on secret box@"+m0;
 
 	timeval curTime;
 
-	for (int t = 0; t < 19; t ++, m0 += m0) {
+	for (int t = 0; t < 18; t ++, m0 += m0) {
 		const char * mb0 = m0.c_str();
 
 		printf("\n\n\tstreess/%fkB: %d times\n", m0.length()/1000.0, t);
@@ -59,6 +59,21 @@ int main(int argc, char *argv[]) {
 		gettimeofday(&curTime, NULL);
 		printf("... secret box open@%6.3f\n", curTime.tv_sec*1000.0 + (curTime.tv_usec / 1000.0));
 	}
+    
+    // signature
+    ///string m2 = "Helloword, TweetNaclFast...";
+    ///unsigned char sign[64+m2.length()];
+    
+    
+    
+    // hash
+    string m1 = "Helloword, TweetNaclFast...";
+    unsigned char hash[64];
+    crypto_hash(hash,(const unsigned char*)m1.c_str(),m1.length());
+    
+    printf("\nhash:");
+    for (int i = 0; i < 64; i ++) printf(" %d", hash[i]);
+    printf("\n");
 
 	return 0;
 }

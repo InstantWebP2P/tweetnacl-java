@@ -7,6 +7,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.iwebpp.crypto.TweetNaclFast.Signature.KeyPair;
+
 
 /*
  * @description 
@@ -669,19 +671,37 @@ public final class TweetNacl {
 		public static KeyPair keyPair() {
 			KeyPair kp = new KeyPair();
 
-			crypto_sign_keypair(kp.getPublicKey(), kp.getSecretKey());
+			crypto_sign_keypair(kp.getPublicKey(), kp.getSecretKey(), false);
 			return kp;
 		}
+
 		public static KeyPair keyPair_fromSecretKey(byte [] secretKey) {
 			KeyPair kp = new KeyPair();
+			byte [] pk = kp.getPublicKey();
+			byte [] sk = kp.getSecretKey();
 
 			// copy sk
 			for (int i = 0; i < kp.getSecretKey().length; i ++)
-				kp.getSecretKey()[i] = secretKey[i];
+				sk[i] = secretKey[i];
 
 			// copy pk from sk
 			for (int i = 0; i < kp.getPublicKey().length; i ++) 
-				kp.getPublicKey()[i] = secretKey[32+i]; // hard-copy
+				pk[i] = secretKey[32+i]; // hard-copy
+
+			return kp;
+		}
+
+		public static KeyPair keyPair_fromSeed(byte [] seed) {
+			KeyPair kp = new KeyPair();
+			byte [] pk = kp.getPublicKey();
+			byte [] sk = kp.getSecretKey();
+
+			// copy sk
+			for (int i = 0; i < seedLength; i ++)
+				sk[i] = seed[i];
+
+			// generate pk from sk 
+			crypto_sign_keypair(pk, sk, true);
 
 			return kp;
 		}
@@ -775,16 +795,16 @@ public final class TweetNacl {
 
 	private static int ld32(byte [] x, final int xoff, final int xlen)
 	{
-		int u = x[3+xoff];
-		u = (u<<8)|x[2+xoff];
-		u = (u<<8)|x[1+xoff];
-		return (u<<8)|x[0+xoff];
+		int u =       (x[3+xoff]&0xff);
+		u =    (u<<8)|(x[2+xoff]&0xff);
+		u =    (u<<8)|(x[1+xoff]&0xff);
+		return (u<<8)|(x[0+xoff]&0xff);
 	}
 
 	private static long dl64(byte [] x, final int xoff, final int xlen) {
 		int i;
 		long u=0;
-		for (i = 0; i < 8; i ++) u=(u<<8)|x[i+xoff];
+		for (i = 0; i < 8; i ++) u=(u<<8)|(x[i+xoff]&0xff);
 		return u;
 	}
 
@@ -1647,11 +1667,10 @@ public final class TweetNacl {
 		scalarmult(p,q, s,soff,slen);
 	}
 
-	public static int crypto_sign_keypair(byte [] pk, byte [] sk)
-	{
-		byte[] d = new byte[64];
+	public static int  crypto_sign_keypair(byte [] pk, byte [] sk, boolean seeded) {
+		byte [] d = new byte[64];
 		long [] [] p = new long [4] [];
-		
+
 		p[0] = new long [16];
 		p[1] = new long [16];
 		p[2] = new long [16];
@@ -1659,17 +1678,16 @@ public final class TweetNacl {
 
 		int i;
 
-		randombytes(sk, 32);
+		if (!seeded) randombytes(sk, 32);
 		crypto_hash(d, sk,0,sk.length, 32);
 		d[0] &= 248;
 		d[31] &= 127;
 		d[31] |= 64;
 
 		scalarbase(p, d,0,d.length);
-		pack(pk,p);
+		pack(pk, p);
 
-		for (i = 0; i < 32; i ++) sk[32 + i] = pk[i];
-		
+		for (i = 0; i < 32; i++) sk[i+32] = pk[i];
 		return 0;
 	}
 

@@ -1,4 +1,4 @@
-var nacl = require('./nacl');
+var nacl = require('./nacl-fast');
 
 var m0 = new Uint8Array(new Buffer('Helloword, Am Tom ...'));
 m0[0] = 0x68;
