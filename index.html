@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Tweetnacl-java by InstantWebP2P</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Tweetnacl-java</h1>
+        <p>Porting TweetNacl in Java</p>
+        <p class="view"><a href="https://github.com/InstantWebP2P/tweetnacl-java">View the Project on GitHub <small>InstantWebP2P/tweetnacl-java</small></a></p>
+        <ul>
+          <li><a href="https://github.com/InstantWebP2P/tweetnacl-java/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/InstantWebP2P/tweetnacl-java/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/InstantWebP2P/tweetnacl-java">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="rewrite-tweetnaclc-in-pure-java" class="anchor" href="#rewrite-tweetnaclc-in-pure-java"><span class="octicon octicon-link"></span></a>Rewrite tweetnacl.c in pure Java</h1>
+
+<h3>
+<a name="apiusage" class="anchor" href="#apiusage"><span class="octicon octicon-link"></span></a>API/Usage</h3>
+
+<h4>
+<a name="public-key-authenticated-encryption" class="anchor" href="#public-key-authenticated-encryption"><span class="octicon octicon-link"></span></a>Public key authenticated encryption</h4>
+
+<ul>
+<li>get key pair: Box.KeyPair kp = Box.keyPair(), kp = Box.keyPair_fromSecretKey(sk)</li>
+<li>new Box object: Box box = new Box(theirPublicKey, mySecretKey, Nonce);</li>
+<li>encryption: cipher = box.box(message);</li>
+<li>decryption: message = box.open(cipher);</li>
+<li>Nonce MUST be unique for ever message passed between same peers</li>
+</ul>
+
+<h4>
+<a name="secret-key-authenticated-encryption" class="anchor" href="#secret-key-authenticated-encryption"><span class="octicon octicon-link"></span></a>Secret key authenticated encryption</h4>
+
+<ul>
+<li>get shared key: crypto random, what you have</li>
+<li>new SecretBox object: SecretBox sbox = new SecretBox(sharedKey, Nonce);</li>
+<li>encryption: cipher = sbox.box(message);</li>
+<li>decryption: message = sbox.open(cipher);</li>
+<li>Nonce MUST be unique for ever message passed between same peers</li>
+</ul>
+
+<h3>
+<a name="signature" class="anchor" href="#signature"><span class="octicon octicon-link"></span></a>Signature</h3>
+
+<ul>
+<li>get key pair: Signature.KeyPair kp = Signature.keyPair(), kp = Signature.keyPair_fromSecretKey(sk);</li>
+<li>new Signature object: Signature sig = new Signature(theirPublicKey, mySecretKey);</li>
+<li>sign: signedMessage = sig.sign(message);</li>
+<li>verify: message = sig.open(signedMessage);</li>
+<li>Nonce MUST be unique for ever message passed between same peers</li>
+</ul>
+
+<h3>
+<a name="hash" class="anchor" href="#hash"><span class="octicon octicon-link"></span></a>Hash</h3>
+
+<ul>
+<li>generate SHA-512: byte [] tag = Hash.sha512(message);</li>
+</ul>
+
+<h3>
+<a name="refer-to-comiwebppcryptotests-for-details" class="anchor" href="#refer-to-comiwebppcryptotests-for-details"><span class="octicon octicon-link"></span></a>Refer to com.iwebpp.crypto.tests for details</h3>
+
+<h3>
+<a name="license-mit" class="anchor" href="#license-mit"><span class="octicon octicon-link"></span></a>License MIT</h3>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/InstantWebP2P">InstantWebP2P</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
