@@ -38,5 +38,6 @@ rewrite tweetnacl.c in pure Java
 ### Refer to com.iwebpp.crypto.tests for details
 
 
-### License MIT
+### License MIT, Copyright(2014-2015) by tom zhou, iwebpp@gmail.com
+
 
