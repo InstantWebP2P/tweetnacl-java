@@ -840,7 +840,7 @@ public final class TweetNaclFast {
 			int n)
 	{
 		int i,d = 0;
-		for (i = 0; i < n; i ++) d |= (x[i+xoff]&0xff) ^ (y[i+yoff]&0xff);
+		for (i = 0; i < n; i ++) d |= (x[i+xoff]^y[i+yoff]) & 0xff;
 		return (1 & ((d - 1) >>> 8)) - 1;
 	}
 
@@ -1238,7 +1238,6 @@ public final class TweetNaclFast {
 		try {
 			sigma = "expand 32-byte k".getBytes("utf-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}*/

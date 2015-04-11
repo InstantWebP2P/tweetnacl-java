@@ -7,8 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.iwebpp.crypto.TweetNaclFast.Signature.KeyPair;
-
 
 /*
  * @description 
@@ -826,7 +824,7 @@ public final class TweetNacl {
 			int n)
 	{
 		int i,d = 0;
-		for (i = 0; i < n; i ++) d |= (x[i+xoff]&0xff) ^ (y[i+yoff]&0xff);
+		for (i = 0; i < n; i ++) d |= (x[i+xoff]^y[i+yoff]) & 0xff;
 		return (1 & ((d - 1) >>> 8)) - 1;
 	}
 
@@ -923,7 +921,6 @@ public final class TweetNacl {
 		try {
 			sigma = "expand 32-byte k".getBytes("utf-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}*/
