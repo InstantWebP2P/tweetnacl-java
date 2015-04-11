@@ -28,14 +28,13 @@
 
     <div class="container">
       <section id="main_content">
-        <h1>
-<a name="rewrite-tweetnaclc-in-pure-java" class="anchor" href="#rewrite-tweetnaclc-in-pure-java"><span class="octicon octicon-link"></span></a>Rewrite tweetnacl.c in pure Java</h1>
+        <p>rewrite tweetnacl.c in pure Java</p>
 
 <h3>
-<a name="apiusage" class="anchor" href="#apiusage"><span class="octicon octicon-link"></span></a>API/Usage</h3>
+<a id="apiusage" class="anchor" href="#apiusage" aria-hidden="true"><span class="octicon octicon-link"></span></a>API/Usage</h3>
 
 <h4>
-<a name="public-key-authenticated-encryption" class="anchor" href="#public-key-authenticated-encryption"><span class="octicon octicon-link"></span></a>Public key authenticated encryption</h4>
+<a id="public-key-authenticated-encryption" class="anchor" href="#public-key-authenticated-encryption" aria-hidden="true"><span class="octicon octicon-link"></span></a>Public key authenticated encryption</h4>
 
 <ul>
 <li>get key pair: Box.KeyPair kp = Box.keyPair(), kp = Box.keyPair_fromSecretKey(sk)</li>
@@ -46,7 +45,7 @@
 </ul>
 
 <h4>
-<a name="secret-key-authenticated-encryption" class="anchor" href="#secret-key-authenticated-encryption"><span class="octicon octicon-link"></span></a>Secret key authenticated encryption</h4>
+<a id="secret-key-authenticated-encryption" class="anchor" href="#secret-key-authenticated-encryption" aria-hidden="true"><span class="octicon octicon-link"></span></a>Secret key authenticated encryption</h4>
 
 <ul>
 <li>get shared key: crypto random, what you have</li>
@@ -57,7 +56,7 @@
 </ul>
 
 <h3>
-<a name="signature" class="anchor" href="#signature"><span class="octicon octicon-link"></span></a>Signature</h3>
+<a id="signature" class="anchor" href="#signature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Signature</h3>
 
 <ul>
 <li>get key pair: Signature.KeyPair kp = Signature.keyPair(), kp = Signature.keyPair_fromSecretKey(sk);</li>
@@ -68,17 +67,22 @@
 </ul>
 
 <h3>
-<a name="hash" class="anchor" href="#hash"><span class="octicon octicon-link"></span></a>Hash</h3>
+<a id="hash" class="anchor" href="#hash" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hash</h3>
 
 <ul>
 <li>generate SHA-512: byte [] tag = Hash.sha512(message);</li>
 </ul>
 
 <h3>
-<a name="refer-to-comiwebppcryptotests-for-details" class="anchor" href="#refer-to-comiwebppcryptotests-for-details"><span class="octicon octicon-link"></span></a>Refer to com.iwebpp.crypto.tests for details</h3>
+<a id="refer-to-comiwebppcryptotests-for-details" class="anchor" href="#refer-to-comiwebppcryptotests-for-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Refer to com.iwebpp.crypto.tests for details</h3>
 
 <h3>
-<a name="license-mit" class="anchor" href="#license-mit"><span class="octicon octicon-link"></span></a>License MIT</h3>
+<a id="license-mit" class="anchor" href="#license-mit" aria-hidden="true"><span class="octicon octicon-link"></span></a>License MIT</h3>
+
+<ul>
+<li>Copyright(2014-2015) by tom zhou, <a href="mailto:iwebpp@gmail.com">iwebpp@gmail.com</a>
+</li>
+</ul>
       </section>
     </div>
 
