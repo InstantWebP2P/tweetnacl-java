@@ -37,6 +37,11 @@ rewrite tweetnacl.c in pure Java
 
 ### Refer to com.iwebpp.crypto.tests for details
 
+### About Random generation 
+
+* the library uses java.security.SecureRandom for key generation
+* you can always use the library to generate key, or use a Crypto Random like java.security.SecureRandom
+
 
 ### License MIT
 
