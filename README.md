@@ -1,4 +1,5 @@
-rewrite tweetnacl.c in pure Java
+TweetNacl in Java
+======
 
 
 ### API/Usage
