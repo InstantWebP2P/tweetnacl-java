@@ -48,10 +48,10 @@ TweetNacl in Java
 
 In top directory:
 
-$ mkdir out
-$ javac -d out src/com/iwebpp/crypto/*.java src/com/iwebpp/crypto/tests/*.java
-$ java -cp out com.iwebpp.crypto.tests.TweetNaclTest
-$ java -cp out com.iwebpp.crypto.tests.TweetNaclFastTest
+    $ mkdir out
+    $ javac -d out src/com/iwebpp/crypto/*.java src/com/iwebpp/crypto/tests/*.java
+    $ java -cp out com.iwebpp.crypto.tests.TweetNaclTest
+    $ java -cp out com.iwebpp.crypto.tests.TweetNaclFastTest
 
 
 ### License MIT
