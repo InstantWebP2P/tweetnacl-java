@@ -44,6 +44,16 @@ TweetNacl in Java
 * you can always use the library to generate key, or use a Crypto Random like java.security.SecureRandom
 
 
+### Testing
+
+In top directory:
+
+$ mkdir out
+$ javac -d out src/com/iwebpp/crypto/*.java src/com/iwebpp/crypto/tests/*.java
+$ java -cp out com.iwebpp.crypto.tests.TweetNaclTest
+$ java -cp out com.iwebpp.crypto.tests.TweetNaclFastTest
+
+
 ### License MIT
 
 * Copyright(2014-2015) by tom zhou, iwebpp@gmail.com

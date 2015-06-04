@@ -288,5 +288,9 @@ public final class TweetNaclTest {
 
 	}
 
+  public static void main(String[] args) {
+    TweetNaclTest t = new TweetNaclTest();
+    t.start();
+  }
 
 }

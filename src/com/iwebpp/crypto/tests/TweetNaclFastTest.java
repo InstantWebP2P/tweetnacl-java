@@ -286,4 +286,10 @@ public final class TweetNaclFastTest {
 
 	}
 
+  public static void main(String[] args) {
+    TweetNaclFastTest t = new TweetNaclFastTest();
+    t.start();
+  }
+
+
 }
