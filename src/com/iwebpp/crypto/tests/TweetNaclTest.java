@@ -5,6 +5,7 @@ package com.iwebpp.crypto.tests;
 
 import java.io.UnsupportedEncodingException;
 import com.iwebpp.crypto.TweetNacl;
+import static com.iwebpp.crypto.TweetNacl.Box.nonceLength;
 
 public final class TweetNaclTest {
 	private static final String TAG = "TweetNaclTest";
@@ -92,6 +93,100 @@ public final class TweetNaclTest {
 
 		return true;
 	}
+
+	private boolean testBoxNonce() throws UnsupportedEncodingException {
+	
+		// explicit nonce
+    byte [] theNonce = new byte[nonceLength]; 
+    com.iwebpp.crypto.TweetNacl.randombytes(theNonce, nonceLength);
+		String theNoncet = "";
+		for (int i = 0; i < theNonce.length; i ++)
+			theNoncet += " "+theNonce[i];
+		Log.d(TAG, "BoxNonce: "+theNoncet);
+	
+
+		// keypair A
+		byte [] ska = new byte[32]; for (int i = 0; i < 32; i ++) ska[i] = 0;
+		TweetNacl.Box.KeyPair ka = TweetNacl.Box.keyPair_fromSecretKey(ska);
+		
+		String skat = "";
+		for (int i = 0; i < ka.getSecretKey().length; i ++)
+			skat += " "+ka.getSecretKey()[i];
+		Log.d(TAG, "skat: "+skat);
+		
+		String pkat = "";
+		for (int i = 0; i < ka.getPublicKey().length; i ++)
+			pkat += " "+ka.getPublicKey()[i];
+		Log.d(TAG, "pkat: "+pkat);
+		
+		// keypair B
+		byte [] skb = new byte[32]; for (int i = 0; i < 32; i ++) skb[i] = 1;
+		TweetNacl.Box.KeyPair kb = TweetNacl.Box.keyPair_fromSecretKey(skb);
+		
+		String skbt = "";
+		for (int i = 0; i < kb.getSecretKey().length; i ++)
+			skbt += " "+kb.getSecretKey()[i];
+		Log.d(TAG, "skbt: "+skbt);
+		
+		String pkbt = "";
+		for (int i = 0; i < kb.getPublicKey().length; i ++)
+			pkbt += " "+kb.getPublicKey()[i];
+		Log.d(TAG, "pkbt: "+pkbt);
+		
+		// peer A -> B
+		TweetNacl.Box pab = new TweetNacl.Box(kb.getPublicKey(), ka.getSecretKey(), 0);
+
+		// peer B -> A
+		TweetNacl.Box pba = new TweetNacl.Box(ka.getPublicKey(), kb.getSecretKey(), 0);
+
+		// messages
+		String m0 = "Helloword, Am Tom ...";
+		
+		// cipher A -> B
+		byte [] cab = pab.box(m0.getBytes("utf-8"), theNonce);
+		String cabt = "";
+		for (int i = 0; i < cab.length; i ++)
+			cabt += " "+cab[i];
+		Log.d(TAG, "cabt: "+cabt);
+		
+		byte [] mba = pba.open(cab, theNonce);
+		String mbat = "";
+		for (int i = 0; i < mba.length; i ++)
+			mbat += " "+mba[i];
+		Log.d(TAG, "mbat: "+mbat);
+		
+		String nm0 = new String(mba, "utf-8");
+		if (nm0.equals(m0)) {
+			Log.d(TAG, "box/open string success (with nonce) @" + m0);
+		} else {
+			Log.e(TAG, "box/open string failed @ (with nonce)" + m0 + " / " + nm0);
+		}
+		
+		// cipher B -> A
+        byte [] b0 = new byte[6];
+        
+        Log.d(TAG, "box@" + System.currentTimeMillis());
+        byte [] cba = pba.box(b0, theNonce);
+		byte [] mab = pab.open(cba, theNonce);
+        Log.d(TAG, "open@" + System.currentTimeMillis());
+
+		if (b0.length == mab.length) {
+			int rc = 0;
+			
+			for (int i = 0; i < b0.length; i ++)
+				if (!(b0[i] == mab[i])) {
+					rc = -1;
+					Log.e(TAG, "box/open binary failed (with nonce) @" + b0[i] + " / " + mab[i]);
+				}
+
+			if (rc == 0)
+				Log.d(TAG, "box/open binary success (with nonce) @" + b0);
+		} else {
+			Log.e(TAG, "box/open binary failed (with nonce) @" + b0 + " / " + mab);
+		}
+
+		return true;
+	}
 	
 	private boolean testSecretBox() throws UnsupportedEncodingException {
 		// shared key
@@ -109,12 +204,12 @@ public final class TweetNaclTest {
 		String m0 = "Helloword, Am Tom ...";
 		
 		// cipher A -> B
-		Log.d(TAG, "streess on secret box@"+m0);
+		Log.d(TAG, "stress on secret box@"+m0);
 		
 		for (int t = 0; t < 19; t ++, m0 += m0) {
 			byte [] mb0 = m0.getBytes("utf-8");
 			
-			Log.d(TAG, "\n\n\tstreess/"+(mb0.length/1000.0) +"kB: " + t + " times");
+			Log.d(TAG, "\n\n\tstress/"+(mb0.length/1000.0) +"kB: " + t + " times");
 
 			/*String mb0t = "mb0/"+mb0.length + ": ";
 			for (int i = 0; i < mb0.length; i ++)
@@ -152,6 +247,77 @@ public final class TweetNaclTest {
 		
 		return true;
 	}
+
+	private boolean testSecretBoxNonce() throws UnsupportedEncodingException {
+		// shared key plus explicit nonce
+		
+		// explicit nonce
+    byte [] theNonce = new byte[nonceLength]; 
+    com.iwebpp.crypto.TweetNacl.randombytes(theNonce, nonceLength);
+		String theNoncet = "";
+		for (int i = 0; i < theNonce.length; i ++)
+			theNoncet += " "+theNonce[i];
+		Log.d(TAG, "SecretBoxNonce: "+theNoncet);
+	
+
+		byte [] shk = new byte[TweetNacl.SecretBox.keyLength];
+		for (int i = 0; i < shk.length; i ++)
+			shk[i] = 0x66;
+
+		// peer A -> B
+		TweetNacl.SecretBox pab = new TweetNacl.SecretBox(shk, 0);
+
+		// peer B -> A
+		TweetNacl.SecretBox pba = new TweetNacl.SecretBox(shk, 0);
+
+		// messages
+		String m0 = "Helloword, Am Tom ...";
+		
+		// cipher A -> B
+		Log.d(TAG, "stress on secret box with explicit nonce@"+m0);
+		
+		for (int t = 0; t < 19; t ++, m0 += m0) {
+			byte [] mb0 = m0.getBytes("utf-8");
+			
+			Log.d(TAG, "\n\n\tstress/"+(mb0.length/1000.0) +"kB: " + t + " times");
+
+			/*String mb0t = "mb0/"+mb0.length + ": ";
+			for (int i = 0; i < mb0.length; i ++)
+				mb0t += " "+mb0[i];
+			Log.d(TAG, mb0t);
+*/
+			Log.d(TAG, "secret box ...@" + System.currentTimeMillis());
+			byte [] cab = pab.box(mb0, theNonce);
+			Log.d(TAG, "... secret box@" + System.currentTimeMillis());
+
+			/*String cabt = "cab/"+cab.length + ": ";
+			for (int i = 0; i < cab.length; i ++)
+				cabt += " "+cab[i];
+			Log.d(TAG, cabt);
+*/
+			Log.d(TAG, "\nsecret box open ...@" + System.currentTimeMillis());
+			byte [] mba = pba.open(cab, theNonce);
+			Log.d(TAG, "... secret box open@" + System.currentTimeMillis());
+
+			/*
+			String mbat = "mba/"+mba.length + ": ";
+			for (int i = 0; i < mba.length; i ++)
+				mbat += " "+mba[i];
+			Log.d(TAG, mbat);
+*/
+			
+			String nm0 = new String(mba, "utf-8");
+			if (nm0.equals(m0)) {
+				Log.d(TAG, "\tsecret box/open success (with nonce)");
+			} else {
+				Log.e(TAG, "\tsecret box/open failed (with nonce) @" + m0 + " / " + nm0);
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
 	
 	private boolean testSign() throws UnsupportedEncodingException {
 		// keypair A
@@ -273,7 +439,9 @@ public final class TweetNaclTest {
 
 				try {
 					testSecretBox();
+					testSecretBoxNonce();
 					testBox();
+					testBoxNonce();
 					
 					testHash();
 					testSign();
