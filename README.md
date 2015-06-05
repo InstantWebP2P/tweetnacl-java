@@ -12,6 +12,15 @@ TweetNacl in Java
 * decryption: message = box.open(cipher);
 * Nonce MUST be unique for ever message passed between same peers
 
+As an alternative, the nonce can be omitted from the Box() call, and passed in the box and open calls, like:
+
+* byte [] nonce = new byte[nonceLength], randombytes(theNonce, nonceLength);
+* Box.KeyPair kp = Box.keyPair(), kp = Box.keyPair_fromSecretKey(sk)
+* Box box = new Box(theirPublicKey, mySecretKey);
+* encryption: cipher = box.box(message, nonce);
+* decryption: message = box.open(cipher, nonce);
+
+
 
 #### Secret key authenticated encryption
 
@@ -20,6 +29,13 @@ TweetNacl in Java
 * encryption: cipher = sbox.box(message);
 * decryption: message = sbox.open(cipher);
 * Nonce MUST be unique for ever message passed between same peers
+
+As an alternative, the nonce can be omitted from the SecretBox() call, and passed in the box and open calls, like:
+
+* byte [] nonce = new byte[nonceLength], randombytes(theNonce, nonceLength);
+* SecretBox sbox = new SecretBox(sharedKey);
+* cipher = sbox.box(message, nonce);
+* decryption: message = sbox.open(cipher, nonce);
 
 
 ### Signature

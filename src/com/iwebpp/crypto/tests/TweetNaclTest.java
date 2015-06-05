@@ -134,10 +134,10 @@ public final class TweetNaclTest {
 		Log.d(TAG, "pkbt: "+pkbt);
 		
 		// peer A -> B
-		TweetNacl.Box pab = new TweetNacl.Box(kb.getPublicKey(), ka.getSecretKey(), 0);
+		TweetNacl.Box pab = new TweetNacl.Box(kb.getPublicKey(), ka.getSecretKey());
 
 		// peer B -> A
-		TweetNacl.Box pba = new TweetNacl.Box(ka.getPublicKey(), kb.getSecretKey(), 0);
+		TweetNacl.Box pba = new TweetNacl.Box(ka.getPublicKey(), kb.getSecretKey());
 
 		// messages
 		String m0 = "Helloword, Am Tom ...";
@@ -265,10 +265,10 @@ public final class TweetNaclTest {
 			shk[i] = 0x66;
 
 		// peer A -> B
-		TweetNacl.SecretBox pab = new TweetNacl.SecretBox(shk, 0);
+		TweetNacl.SecretBox pab = new TweetNacl.SecretBox(shk);
 
 		// peer B -> A
-		TweetNacl.SecretBox pba = new TweetNacl.SecretBox(shk, 0);
+		TweetNacl.SecretBox pba = new TweetNacl.SecretBox(shk);
 
 		// messages
 		String m0 = "Helloword, Am Tom ...";
