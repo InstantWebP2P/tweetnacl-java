@@ -1,14 +1,13 @@
 package com.iwebpp.crypto.tests;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 import com.iwebpp.crypto.TweetNaclFast;
-import static com.iwebpp.crypto.TweetNaclFast.Box.nonceLength;
-
 
 public final class TweetNaclFastTest {
 	private static final String TAG = "TweetNaclFastTest";
-
+	
 	private boolean testBox() throws UnsupportedEncodingException {
 		// keypair A
 		byte [] ska = new byte[32]; for (int i = 0; i < 32; i ++) ska[i] = 0;
@@ -18,6 +17,7 @@ public final class TweetNaclFastTest {
 		for (int i = 0; i < ka.getSecretKey().length; i ++)
 			skat += " "+ka.getSecretKey()[i];
 		Log.d(TAG, "skat: "+skat);
+		
 		
 		String pkat = "";
 		for (int i = 0; i < ka.getPublicKey().length; i ++)
@@ -96,13 +96,21 @@ public final class TweetNaclFastTest {
 	private boolean testBoxNonce() throws UnsupportedEncodingException {
 	
 		// explicit nonce
-    byte [] theNonce = new byte[nonceLength]; 
-    com.iwebpp.crypto.TweetNaclFast.randombytes(theNonce, nonceLength);
+    byte [] theNonce = TweetNaclFast.makeBoxNonce();
+		byte [] theNonce2 = TweetNaclFast.base64Decode(
+		                      TweetNaclFast.base64EncodeToString(theNonce));
+		Log.d(TAG, "BoxNonce Base64 test Equal: " + "\"" + java.util.Arrays.equals(theNonce, theNonce2) + "\"");
+		byte [] theNonce3 = TweetNaclFast.hexDecode(
+		                      TweetNaclFast.hexEncodeToString(theNonce));
+		Log.d(TAG, "BoxNonce Hex test Equal: " + "\"" + java.util.Arrays.equals(theNonce, theNonce3) + "\"");
 		String theNoncet = "";
 		for (int i = 0; i < theNonce.length; i ++)
 			theNoncet += " "+theNonce[i];
 		Log.d(TAG, "BoxNonce: "+theNoncet);
-	
+		Log.d(TAG, "BoxNonce: " + "\"" + TweetNaclFast.base64EncodeToString(theNonce) + "\"");
+		Log.d(TAG, "BoxNonce: " + "\"" + TweetNaclFast.hexEncodeToString(theNonce) + "\"");
+                 
+		
 
 		// keypair A
 		byte [] ska = new byte[32]; for (int i = 0; i < 32; i ++) ska[i] = 0;
@@ -250,8 +258,7 @@ public final class TweetNaclFastTest {
 	private boolean testSecretBoxNonce() throws UnsupportedEncodingException {
 		
 		// explicit nonce
-    byte [] theNonce = new byte[nonceLength]; 
-    com.iwebpp.crypto.TweetNaclFast.randombytes(theNonce, nonceLength);
+    byte [] theNonce = TweetNaclFast.makeSecretBoxNonce();
 		String theNoncet = "";
 		for (int i = 0; i < theNonce.length; i ++)
 			theNoncet += " "+theNonce[i];
