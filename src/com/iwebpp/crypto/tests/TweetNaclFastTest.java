@@ -96,7 +96,7 @@ public final class TweetNaclFastTest {
 	private boolean testBoxNonce() throws UnsupportedEncodingException {
 	
 		// explicit nonce
-    byte [] theNonce = TweetNaclFast.makeBoxNonce();
+        byte [] theNonce = TweetNaclFast.makeBoxNonce();
 		byte [] theNonce2 = TweetNaclFast.base64Decode(
 		                      TweetNaclFast.base64EncodeToString(theNonce));
 		Log.d(TAG, "BoxNonce Base64 test Equal: " + "\"" + java.util.Arrays.equals(theNonce, theNonce2) + "\"");
@@ -258,7 +258,7 @@ public final class TweetNaclFastTest {
 	private boolean testSecretBoxNonce() throws UnsupportedEncodingException {
 		
 		// explicit nonce
-    byte [] theNonce = TweetNaclFast.makeSecretBoxNonce();
+        byte [] theNonce = TweetNaclFast.makeSecretBoxNonce();
 		String theNoncet = "";
 		for (int i = 0; i < theNonce.length; i ++)
 			theNoncet += " "+theNonce[i];

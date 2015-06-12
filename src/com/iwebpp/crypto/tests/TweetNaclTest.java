@@ -97,8 +97,8 @@ public final class TweetNaclTest {
 	private boolean testBoxNonce() throws UnsupportedEncodingException {
 	
 		// explicit nonce
-    byte [] theNonce = new byte[nonceLength]; 
-    com.iwebpp.crypto.TweetNacl.randombytes(theNonce, nonceLength);
+        byte [] theNonce = new byte[nonceLength]; 
+        com.iwebpp.crypto.TweetNacl.randombytes(theNonce, nonceLength);
 		String theNoncet = "";
 		for (int i = 0; i < theNonce.length; i ++)
 			theNoncet += " "+theNonce[i];
@@ -252,8 +252,8 @@ public final class TweetNaclTest {
 		// shared key plus explicit nonce
 		
 		// explicit nonce
-    byte [] theNonce = new byte[nonceLength]; 
-    com.iwebpp.crypto.TweetNacl.randombytes(theNonce, nonceLength);
+        byte [] theNonce = new byte[nonceLength]; 
+        com.iwebpp.crypto.TweetNacl.randombytes(theNonce, nonceLength);
 		String theNoncet = "";
 		for (int i = 0; i < theNonce.length; i ++)
 			theNoncet += " "+theNonce[i];
