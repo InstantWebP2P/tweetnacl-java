@@ -4,6 +4,8 @@ TweetNacl in Java
 
 ### API/Usage
 
+### Suggest always use TweetNaclFast implementation
+
 #### Public key authenticated encryption
 
 * get key pair: Box.KeyPair kp = Box.keyPair(), kp = Box.keyPair_fromSecretKey(sk)
