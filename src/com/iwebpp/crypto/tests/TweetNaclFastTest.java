@@ -163,12 +163,14 @@ public final class TweetNaclFastTest {
 		}
 		
 		// cipher B -> A
-        byte [] b0 = new byte[6];
+        byte [] b0 = new byte[100*1000000];
+        for (int i = 0; i < b0.length; i ++)
+        	b0[i] = (byte)i;
         
-        Log.d(TAG, "box@" + System.currentTimeMillis());
+        Log.d(TAG, "big of 100M  box@" + System.currentTimeMillis());
         byte [] cba = pba.box(b0);
 		byte [] mab = pab.open(cba);
-        Log.d(TAG, "open@" + System.currentTimeMillis());
+        Log.d(TAG, "big of 100M open@" + System.currentTimeMillis());
 
 		if (b0.length == mab.length) {
 			int rc = 0;
@@ -176,13 +178,13 @@ public final class TweetNaclFastTest {
 			for (int i = 0; i < b0.length; i ++)
 				if (!(b0[i] == mab[i])) {
 					rc = -1;
-					Log.e(TAG, "box/open binary failed @" + b0[i] + " / " + mab[i]);
+					Log.e(TAG, "big of 100M box/open binary failed @" + b0[i] + " / " + mab[i]);
 				}
 
 			if (rc == 0)
-				Log.d(TAG, "box/open binary success @" + b0);
+				Log.d(TAG, "big of 100M box/open binary success @" + b0);
 		} else {
-			Log.e(TAG, "box/open binary failed @" + b0 + " / " + mab);
+			Log.e(TAG, "big of 100M box/open binary failed @" + b0 + " / " + mab);
 		}
 
 		return true;
@@ -537,14 +539,14 @@ public final class TweetNaclFastTest {
 				Log.d(TAG, "start test");
 
 				try {
-					testSecretBox();
-					testSecretBoxNonce();
+					///testSecretBox();
+					///testSecretBoxNonce();
 					testBox();
-					testBoxNonce();
-					testBoxKalium();
+					///testBoxNonce();
+					///testBoxKalium();
 					
-					testHash();
-					testSign();
+					///testHash();
+					///testSign();
 					
 					///testBench();
 				} catch (UnsupportedEncodingException e) {
