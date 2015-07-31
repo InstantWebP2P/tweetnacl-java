@@ -762,8 +762,11 @@ public final class TweetNaclFast {
 		 *   Signs the message using the secret key and returns a signature.
 		 * */
 		public byte [] detached(byte [] message) {
-
-			return null;
+			byte[] signedMsg = this.sign(message);
+			byte[] sig = new byte[signatureLength];
+			for (int i = 0; i < sig.length; i++)
+				sig[i] = signedMsg[i];
+			return sig;
 		}
 
 		/*
@@ -772,8 +775,17 @@ public final class TweetNaclFast {
 		 *   returns true if verification succeeded or false if it failed.
 		 * */
 		public boolean detached_verify(byte [] message, byte [] signature) {
-
-			return false;
+			if (signature.length != signatureLength)
+				return false;
+			if (theirPublicKey.length != publicKeyLength)
+				return false;
+			byte [] sm = new byte[signatureLength + message.length];
+			byte [] m = new byte[signatureLength + message.length];
+			for (int i = 0; i < signatureLength; i++)
+				sm[i] = signature[i];
+			for (int i = 0; i < message.length; i++)
+				sm[i + signatureLength] = message[i];
+			return (crypto_sign_open(m, -1, sm, 0, sm.length, theirPublicKey) >= 0);
 		}
 
 		/*
