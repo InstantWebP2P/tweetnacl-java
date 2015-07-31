@@ -524,7 +524,34 @@ public final class TweetNaclFastTest {
 		
 		return true;
 	}
-	
+
+	private boolean testSignDetached(String seedStr) throws UnsupportedEncodingException {
+		Log.d(TAG, "seed:@" + System.currentTimeMillis());
+
+		byte[] seed = TweetNaclFast.hexDecode(seedStr);
+		TweetNaclFast.Signature.KeyPair kp = TweetNaclFast.Signature.keyPair_fromSeed(seed);
+
+		String testString = "test string";
+		byte[] bytes = testString.getBytes();
+
+		TweetNaclFast.Signature s1 = new TweetNaclFast.Signature(null, kp.getSecretKey());
+		Log.d(TAG, "\ndetached...@" + System.currentTimeMillis());
+		byte[] signature = s1.detached(bytes);
+		Log.d(TAG, "...detached@" + System.currentTimeMillis());
+
+		TweetNaclFast.Signature s2 = new TweetNaclFast.Signature(kp.getPublicKey(), null);
+		Log.d(TAG, "\nverify...@" + System.currentTimeMillis());
+		boolean result = s2.detached_verify(bytes,  signature);
+		Log.d(TAG, "...verify@" + System.currentTimeMillis());
+
+		if(result) {
+			Log.d(TAG, "verify success @" + testString);
+		} else {
+			Log.e(TAG, "verify failed @" + testString);
+		}
+
+		return  true;
+	}
 	/*
 	 * bench test using tweetnacl.c, tweetnacl.js result
 	 * */
@@ -541,13 +568,16 @@ public final class TweetNaclFastTest {
 				try {
 					///testSecretBox();
 					///testSecretBoxNonce();
-					testBox();
+					///testBox();
 					///testBoxNonce();
 					///testBoxKalium();
 					
 					///testHash();
 					///testSign();
-					
+
+					testSignDetached("ac49000da11249ea3510941703a7e21a39837c4d2d5300daebbd532df20f8135");
+					testSignDetached("e56f0eef73ade8f79bc1d16a99cbc5e4995afd8c14adb49410ecd957aecc8d02");
+
 					///testBench();
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block

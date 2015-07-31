@@ -2299,7 +2299,7 @@ public final class TweetNacl {
 		M(chk,0,chk.length, chk,0,chk.length, den,0,den.length);
 		if (neq25519(chk, num)!=0) return -1;
 
-		if (par25519(r[0]) == (p[31]>>7)) Z(r[0],0,r[0].length, gf0,0,gf0.length, r[0],0,r[0].length);
+		if (par25519(r[0]) == ((p[31]&0xFF)>>7)) Z(r[0],0,r[0].length, gf0,0,gf0.length, r[0],0,r[0].length);
 
 		M(r[3],0,r[3].length, r[0],0,r[0].length, r[1],0,r[1].length);
 		return 0;

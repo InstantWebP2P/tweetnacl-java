@@ -3262,7 +3262,7 @@ public final class TweetNaclFast {
 		M(chk, chk, den);
 		if (neq25519(chk, num)!=0) return -1;
 
-		if (par25519(r[0]) == (p[31]>>>7)) Z(r[0], gf0, r[0]);
+		if (par25519(r[0]) == ((p[31]&0xFF)>>>7)) Z(r[0], gf0, r[0]);
 
 		M(r[3], r[0], r[1]);
 
