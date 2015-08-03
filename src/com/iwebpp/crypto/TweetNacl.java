@@ -695,8 +695,11 @@ public final class TweetNacl {
 		 *   Signs the message using the secret key and returns a signature.
 		 * */
 		public byte [] detached(byte [] message) {
-
-			return null;
+			byte[] signedMsg = this.sign(message);
+			byte[] sig = new byte[signatureLength];
+			for (int i = 0; i < sig.length; i++)
+				sig[i] = signedMsg[i];
+			return sig;
 		}
 
 		/*
@@ -705,8 +708,17 @@ public final class TweetNacl {
 		 *   returns true if verification succeeded or false if it failed.
 		 * */
 		public boolean detached_verify(byte [] message, byte [] signature) {
-
-			return false;
+			if (signature.length != signatureLength)
+				return false;
+			if (theirPublicKey.length != publicKeyLength)
+				return false;
+			byte [] sm = new byte[signatureLength + message.length];
+			byte [] m = new byte[signatureLength + message.length];
+			for (int i = 0; i < signatureLength; i++)
+				sm[i] = signature[i];
+			for (int i = 0; i < message.length; i++)
+				sm[i + signatureLength] = message[i];
+			return (crypto_sign_open(m, -1, sm, sm.length, theirPublicKey) >= 0);
 		}
 
 		/*
@@ -2287,7 +2299,7 @@ public final class TweetNacl {
 		M(chk,0,chk.length, chk,0,chk.length, den,0,den.length);
 		if (neq25519(chk, num)!=0) return -1;
 
-		if (par25519(r[0]) == (p[31]>>7)) Z(r[0],0,r[0].length, gf0,0,gf0.length, r[0],0,r[0].length);
+		if (par25519(r[0]) == ((p[31]&0xFF)>>7)) Z(r[0],0,r[0].length, gf0,0,gf0.length, r[0],0,r[0].length);
 
 		M(r[3],0,r[3].length, r[0],0,r[0].length, r[1],0,r[1].length);
 		return 0;
