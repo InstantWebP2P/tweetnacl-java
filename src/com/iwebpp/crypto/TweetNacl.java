@@ -368,7 +368,7 @@ public final class TweetNacl {
 	 * @description 
 	 *   Secret Box algorithm, secret key
 	 * */
-	public static class SecretBox {
+	public static final class SecretBox {
 
 		private final static String TAG = "SecretBox";
 
@@ -1149,7 +1149,7 @@ public final class TweetNacl {
 	* Port of Andrew Moon's Poly1305-donna-16. Public domain.
 	* https://github.com/floodyberry/poly1305-donna
 	*/
-	public static class poly1305 {
+	public static final class poly1305 {
 
 		private byte[] buffer;
 		private int[] r;
