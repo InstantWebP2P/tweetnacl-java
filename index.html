@@ -1,40 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
+    <meta charset="UTF-8">
     <title>Tweetnacl-java by InstantWebP2P</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">Tweetnacl-java</h1>
+      <h2 class="project-tagline">Porting TweetNacl in Java</h2>
+      <a href="https://github.com/InstantWebP2P/tweetnacl-java" class="btn">View on GitHub</a>
+      <a href="https://github.com/InstantWebP2P/tweetnacl-java/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/InstantWebP2P/tweetnacl-java/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <header>
-      <div class="container">
-        <h1>Tweetnacl-java</h1>
-        <h2>Porting TweetNacl in Java</h2>
-
-        <section id="downloads">
-          <a href="https://github.com/InstantWebP2P/tweetnacl-java/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/InstantWebP2P/tweetnacl-java/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/InstantWebP2P/tweetnacl-java" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
-
-    <div class="container">
-      <section id="main_content">
-        <p>rewrite tweetnacl.c in pure Java</p>
+    <section class="main-content">
+      <p>rewrite tweetnacl.c in pure Java</p>
 
 <h3>
-<a id="apiusage" class="anchor" href="#apiusage" aria-hidden="true"><span class="octicon octicon-link"></span></a>API/Usage</h3>
+<a id="apiusage" class="anchor" href="#apiusage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API/Usage</h3>
 
 <h4>
-<a id="public-key-authenticated-encryption" class="anchor" href="#public-key-authenticated-encryption" aria-hidden="true"><span class="octicon octicon-link"></span></a>Public key authenticated encryption</h4>
+<a id="public-key-authenticated-encryption" class="anchor" href="#public-key-authenticated-encryption" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Public key authenticated encryption</h4>
 
 <ul>
 <li>get key pair: Box.KeyPair kp = Box.keyPair(), kp = Box.keyPair_fromSecretKey(sk)</li>
@@ -45,7 +36,7 @@
 </ul>
 
 <h4>
-<a id="secret-key-authenticated-encryption" class="anchor" href="#secret-key-authenticated-encryption" aria-hidden="true"><span class="octicon octicon-link"></span></a>Secret key authenticated encryption</h4>
+<a id="secret-key-authenticated-encryption" class="anchor" href="#secret-key-authenticated-encryption" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Secret key authenticated encryption</h4>
 
 <ul>
 <li>get shared key: crypto random, what you have</li>
@@ -56,7 +47,7 @@
 </ul>
 
 <h3>
-<a id="signature" class="anchor" href="#signature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Signature</h3>
+<a id="signature" class="anchor" href="#signature" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Signature</h3>
 
 <ul>
 <li>get key pair: Signature.KeyPair kp = Signature.keyPair(), kp = Signature.keyPair_fromSecretKey(sk);</li>
@@ -67,25 +58,31 @@
 </ul>
 
 <h3>
-<a id="hash" class="anchor" href="#hash" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hash</h3>
+<a id="hash" class="anchor" href="#hash" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Hash</h3>
 
 <ul>
 <li>generate SHA-512: byte [] tag = Hash.sha512(message);</li>
 </ul>
 
 <h3>
-<a id="refer-to-comiwebppcryptotests-for-details" class="anchor" href="#refer-to-comiwebppcryptotests-for-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Refer to com.iwebpp.crypto.tests for details</h3>
+<a id="refer-to-comiwebppcryptotests-for-details" class="anchor" href="#refer-to-comiwebppcryptotests-for-details" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Refer to com.iwebpp.crypto.tests for details</h3>
 
 <h3>
-<a id="license-mit" class="anchor" href="#license-mit" aria-hidden="true"><span class="octicon octicon-link"></span></a>License MIT</h3>
+<a id="license-mit" class="anchor" href="#license-mit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License MIT</h3>
 
 <ul>
 <li>Copyright(2014-2015) by tom zhou, <a href="mailto:iwebpp@gmail.com">iwebpp@gmail.com</a>
 </li>
 </ul>
-      </section>
-    </div>
 
-    
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/InstantWebP2P/tweetnacl-java">Tweetnacl-java</a> is maintained by <a href="https://github.com/InstantWebP2P">InstantWebP2P</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
   </body>
 </html>
