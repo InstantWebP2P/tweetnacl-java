@@ -19,10 +19,14 @@
     </section>
 
     <section class="main-content">
-      <p>rewrite tweetnacl.c in pure Java</p>
+      <h1>
+<a id="tweetnacl-in-java" class="anchor" href="#tweetnacl-in-java" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TweetNacl in Java</h1>
 
 <h3>
 <a id="apiusage" class="anchor" href="#apiusage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API/Usage</h3>
+
+<h3>
+<a id="suggest-always-use-tweetnaclfast-implementation" class="anchor" href="#suggest-always-use-tweetnaclfast-implementation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Suggest always use TweetNaclFast implementation</h3>
 
 <h4>
 <a id="public-key-authenticated-encryption" class="anchor" href="#public-key-authenticated-encryption" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Public key authenticated encryption</h4>
@@ -35,6 +39,16 @@
 <li>Nonce MUST be unique for ever message passed between same peers</li>
 </ul>
 
+<p>As an alternative, the nonce can be omitted from the Box() call, and passed in the box and open calls, like:</p>
+
+<ul>
+<li>byte [] nonce = new byte[nonceLength], randombytes(theNonce, nonceLength);</li>
+<li>Box.KeyPair kp = Box.keyPair(), kp = Box.keyPair_fromSecretKey(sk)</li>
+<li>Box box = new Box(theirPublicKey, mySecretKey);</li>
+<li>encryption: cipher = box.box(message, nonce);</li>
+<li>decryption: message = box.open(cipher, nonce);</li>
+</ul>
+
 <h4>
 <a id="secret-key-authenticated-encryption" class="anchor" href="#secret-key-authenticated-encryption" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Secret key authenticated encryption</h4>
 
@@ -44,6 +58,15 @@
 <li>encryption: cipher = sbox.box(message);</li>
 <li>decryption: message = sbox.open(cipher);</li>
 <li>Nonce MUST be unique for ever message passed between same peers</li>
+</ul>
+
+<p>As an alternative, the nonce can be omitted from the SecretBox() call, and passed in the box and open calls, like:</p>
+
+<ul>
+<li>byte [] nonce = new byte[nonceLength], randombytes(theNonce, nonceLength);</li>
+<li>SecretBox sbox = new SecretBox(sharedKey);</li>
+<li>cipher = sbox.box(message, nonce);</li>
+<li>decryption: message = sbox.open(cipher, nonce);</li>
 </ul>
 
 <h3>
@@ -66,6 +89,25 @@
 
 <h3>
 <a id="refer-to-comiwebppcryptotests-for-details" class="anchor" href="#refer-to-comiwebppcryptotests-for-details" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Refer to com.iwebpp.crypto.tests for details</h3>
+
+<h3>
+<a id="about-random-generation" class="anchor" href="#about-random-generation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About Random generation</h3>
+
+<ul>
+<li>the library uses java.security.SecureRandom for key generation</li>
+<li>you can always use the library to generate key, or use a Crypto Random like java.security.SecureRandom</li>
+</ul>
+
+<h3>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing</h3>
+
+<p>In top directory:</p>
+
+<pre><code>$ mkdir out
+$ javac -d out src/com/iwebpp/crypto/*.java src/com/iwebpp/crypto/tests/*.java
+$ java -cp out com.iwebpp.crypto.tests.TweetNaclTest
+$ java -cp out com.iwebpp.crypto.tests.TweetNaclFastTest
+</code></pre>
 
 <h3>
 <a id="license-mit" class="anchor" href="#license-mit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License MIT</h3>
