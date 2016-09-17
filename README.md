@@ -1,5 +1,5 @@
-TweetNacl in Java
-======
+Efficent Curve Crypto Library - TweetNacl in Java
+=================================================
 
 
 ### API/Usage
