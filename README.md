@@ -1,4 +1,4 @@
-Efficent Curve Crypto Library - TweetNacl in Java
+Fast Curve Crypto Library - TweetNacl in Java
 =================================================
 
 
