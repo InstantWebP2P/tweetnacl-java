@@ -72,6 +72,12 @@ In top directory:
     $ java -cp out com.iwebpp.crypto.tests.TweetNaclFastTest
 
 
+### Support us
+* scan QRcode to follow our WeChat(云瓜桌面) 
+* ![云瓜云](https://github.com/InstantWebP2P/peer-vnc/blob/master/cloudgua.jpg)
+* 远程工作云办公联盟 QQ 群号: 463651269
+
+
 ### License MIT
 
 * Copyright(2014-2017) by tom zhou, iwebpp@gmail.com
