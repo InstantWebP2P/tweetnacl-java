@@ -5,7 +5,6 @@ package com.iwebpp.crypto;
 
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
-import java.util.Base64;
 import java.lang.System;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -3389,16 +3388,6 @@ public final class TweetNaclFast {
 	public static byte[] makeSecretBoxNonce() {
 	  return randombytes(SecretBox.nonceLength);
 	}
-	
-	public static String base64EncodeToString(byte [] b) {
-	  return Base64.getUrlEncoder().withoutPadding().encodeToString(b);
-	}
-	// byte[] Base64.getUrlEncoder().withoutPadding().encode(b);
-	
-	public static byte[] base64Decode(String s) {
-	  return Base64.getUrlDecoder().decode(s);
-	}
-	// byte[] Base64.getUrlDecoder().decode(byte[] b)
 	
   public static String hexEncodeToString( byte [] raw ) {
     String HEXES = "0123456789ABCDEF";

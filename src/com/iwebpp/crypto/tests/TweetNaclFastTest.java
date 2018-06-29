@@ -194,9 +194,6 @@ public final class TweetNaclFastTest {
 	
 		// explicit nonce
         byte [] theNonce = TweetNaclFast.makeBoxNonce();
-		byte [] theNonce2 = TweetNaclFast.base64Decode(
-		                      TweetNaclFast.base64EncodeToString(theNonce));
-		Log.d(TAG, "BoxNonce Base64 test Equal: " + "\"" + java.util.Arrays.equals(theNonce, theNonce2) + "\"");
 		byte [] theNonce3 = TweetNaclFast.hexDecode(
 		                      TweetNaclFast.hexEncodeToString(theNonce));
 		Log.d(TAG, "BoxNonce Hex test Equal: " + "\"" + java.util.Arrays.equals(theNonce, theNonce3) + "\"");
@@ -204,7 +201,6 @@ public final class TweetNaclFastTest {
 		for (int i = 0; i < theNonce.length; i ++)
 			theNoncet += " "+theNonce[i];
 		Log.d(TAG, "BoxNonce: "+theNoncet);
-		Log.d(TAG, "BoxNonce: " + "\"" + TweetNaclFast.base64EncodeToString(theNonce) + "\"");
 		Log.d(TAG, "BoxNonce: " + "\"" + TweetNaclFast.hexEncodeToString(theNonce) + "\"");
                  
 		
