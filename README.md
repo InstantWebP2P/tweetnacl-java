@@ -66,10 +66,7 @@ As an alternative, the nonce can be omitted from the SecretBox() call, and passe
 
 In top directory:
 
-    $ mkdir out
-    $ javac -d out src/com/iwebpp/crypto/*.java src/com/iwebpp/crypto/tests/*.java
-    $ java -cp out com.iwebpp.crypto.tests.TweetNaclTest
-    $ java -cp out com.iwebpp.crypto.tests.TweetNaclFastTest
+    $ mvn test
 
 
 ### Support us
