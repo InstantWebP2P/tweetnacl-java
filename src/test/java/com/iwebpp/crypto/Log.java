@@ -1,4 +1,4 @@
-package com.iwebpp.crypto.tests;
+package com.iwebpp.crypto;
 
 public final class Log {
 

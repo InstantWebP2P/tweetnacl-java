@@ -1,9 +1,15 @@
-package com.iwebpp.crypto.tests;
+package com.iwebpp.crypto;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import com.iwebpp.crypto.TweetNaclFast;
+import org.junit.Test;
 
 public final class TweetNaclFastTest {
 	private static final String TAG = "TweetNaclFastTest";
@@ -44,7 +50,8 @@ public final class TweetNaclFastTest {
 	"4eb2ca19ebcf917f0f34200a9edbad3901b64ab09cc5ef7b9bcc3c40c0ff7509";
 	public static final String SIGN_PUBLIC = "77f48b59caeda77751ed138b0ec667ff50f8768c25d48309a8f386a2bad187fb";
 
-	private boolean testBoxKalium() throws UnsupportedEncodingException {
+	@Test
+	public void testBoxKalium() throws UnsupportedEncodingException {
 	
 		Log.d(TAG, "testBoxKalium: test vectors from Kalium project");                 
 
@@ -82,28 +89,22 @@ public final class TweetNaclFastTest {
 		byte [] cabFast = pabFast.box(TweetNaclFast.hexDecode(BOX_MESSAGE), theNonce);
 		Log.d(TAG, "cabFast: \n" + TweetNaclFast.hexEncodeToString(cabFast));
 
-		if(BOX_CIPHERTEXT.toUpperCase().equals(TweetNaclFast.hexEncodeToString(cabFast))) {
-					Log.d(TAG, "\n TweetNaclFast is compatible with Kalium test vector for Box::box");
-		} else {
-					Log.d(TAG, "\n\n!!! TweetNaclFast Box::box/open failed Kalium compatibility !!!\n");
-					return false;
-		}
+		assertEquals("!!! TweetNaclFast Box::box/open failed Kalium compatibility !!!",
+					 BOX_CIPHERTEXT.toUpperCase(),
+					 TweetNaclFast.hexEncodeToString(cabFast));
 
 		byte [] mbaFastFast = pbaFast.open(cabFast, theNonce);
 		Log.d(TAG, "mbaFastFast: \n" + TweetNaclFast.hexEncodeToString(mbaFastFast));                 
 
-		if(BOX_MESSAGE.toUpperCase().equals(TweetNaclFast.hexEncodeToString(mbaFastFast))) {
-					Log.d(TAG, "\n TweetNaclFast is compatible with Kalium test vector for Box::open");
-		} else {
-					Log.d(TAG, "\n\n!!! TweetNaclFast Box::box/open failed Kalium compatibility !!!\n");
-					return false;
-		}
+		assertEquals("!!! TweetNaclFast Box::box/open failed Kalium compatibility !!!",
+					 BOX_MESSAGE.toUpperCase(),
+					 TweetNaclFast.hexEncodeToString(mbaFastFast));
 
-		return true;
 	}
 
 
-	private boolean testBox() throws UnsupportedEncodingException {
+	@Test
+	public void testBox() throws UnsupportedEncodingException {
 		// keypair A
 		byte [] ska = new byte[32]; for (int i = 0; i < 32; i ++) ska[i] = 0;
 		TweetNaclFast.Box.KeyPair ka = TweetNaclFast.Box.keyPair_fromSecretKey(ska);
@@ -156,41 +157,24 @@ public final class TweetNaclFastTest {
 		Log.d(TAG, "mbat: "+mbat);
 		
 		String nm0 = new String(mba, "utf-8");
-		if (nm0.equals(m0)) {
-			Log.d(TAG, "box/open string success @" + m0);
-		} else {
-			Log.e(TAG, "box/open string failed @" + m0 + " / " + nm0);
-		}
-		
+		assertEquals("box/open string failed", nm0, m0);
+
 		// cipher B -> A
-        byte [] b0 = new byte[100*1000000];
-        for (int i = 0; i < b0.length; i ++)
-        	b0[i] = (byte)i;
-        
-        Log.d(TAG, "big of 100M  box@" + System.currentTimeMillis());
-        byte [] cba = pba.box(b0);
+		byte [] b0 = new byte[100*1000000];
+		for (int i = 0; i < b0.length; i ++)
+			b0[i] = (byte)i;
+
+		Log.d(TAG, "big of 100M  box@" + System.currentTimeMillis());
+		byte [] cba = pba.box(b0);
 		byte [] mab = pab.open(cba);
-        Log.d(TAG, "big of 100M open@" + System.currentTimeMillis());
+		Log.d(TAG, "big of 100M open@" + System.currentTimeMillis());
 
-		if (b0.length == mab.length) {
-			int rc = 0;
-			
-			for (int i = 0; i < b0.length; i ++)
-				if (!(b0[i] == mab[i])) {
-					rc = -1;
-					Log.e(TAG, "big of 100M box/open binary failed @" + b0[i] + " / " + mab[i]);
-				}
+		assertArrayEquals("big of 100M box/open binary failed", b0 ,mab);
 
-			if (rc == 0)
-				Log.d(TAG, "big of 100M box/open binary success @" + b0);
-		} else {
-			Log.e(TAG, "big of 100M box/open binary failed @" + b0 + " / " + mab);
-		}
-
-		return true;
 	}
 
-	private boolean testBoxNonce() throws UnsupportedEncodingException {
+	@Test
+	public void testBoxNonce() throws UnsupportedEncodingException {
 	
 		// explicit nonce
         byte [] theNonce = TweetNaclFast.makeBoxNonce();
@@ -256,39 +240,22 @@ public final class TweetNaclFastTest {
 		Log.d(TAG, "mbat: "+mbat);
 		
 		String nm0 = new String(mba, "utf-8");
-		if (nm0.equals(m0)) {
-			Log.d(TAG, "box/open string success (with nonce) @" + m0);
-		} else {
-			Log.e(TAG, "box/open string failed (with nonce) @" + m0 + " / " + nm0);
-		}
-		
+		assertEquals("box/open string failed (with nonce)", nm0, m0);
+
 		// cipher B -> A
-        byte [] b0 = new byte[6];
+		byte [] b0 = new byte[6];
         
-        Log.d(TAG, "box@" + System.currentTimeMillis());
-        byte [] cba = pba.box(b0, theNonce);
+		Log.d(TAG, "box@" + System.currentTimeMillis());
+		byte [] cba = pba.box(b0, theNonce);
 		byte [] mab = pab.open(cba, theNonce);
-        Log.d(TAG, "open@" + System.currentTimeMillis());
+		Log.d(TAG, "open@" + System.currentTimeMillis());
 
-		if (b0.length == mab.length) {
-			int rc = 0;
-			
-			for (int i = 0; i < b0.length; i ++)
-				if (!(b0[i] == mab[i])) {
-					rc = -1;
-					Log.e(TAG, "box/open binary failed (with nonce) @" + b0[i] + " / " + mab[i]);
-				}
+		assertArrayEquals("box/open binary failed (with nonce)", b0, mab);
 
-			if (rc == 0)
-				Log.d(TAG, "box/open binary success (with nonce) @" + b0);
-		} else {
-			Log.e(TAG, "box/open binary failed (with nonce) @" + b0 + " / " + mab);
-		}
-
-		return true;
 	}
 	
-	private boolean testSecretBox() throws UnsupportedEncodingException {
+	@Test
+	public void testSecretBox() throws UnsupportedEncodingException {
 		// shared key
 		byte [] shk = new byte[TweetNaclFast.SecretBox.keyLength];
 		for (int i = 0; i < shk.length; i ++)
@@ -337,18 +304,12 @@ public final class TweetNaclFastTest {
 */
 			
 			String nm0 = new String(mba, "utf-8");
-			if (nm0.equals(m0)) {
-				Log.d(TAG, "\tsecret box/open succes");
-			} else {
-				Log.e(TAG, "\tsecret box/open failed @" + m0 + " / " + nm0);
-				return false;
-			}
+			assertEquals("secret box/open failed", nm0, m0);
 		}
-		
-		return true;
 	}
 
-	private boolean testSecretBoxNonce() throws UnsupportedEncodingException {
+	@Test
+	public void testSecretBoxNonce() throws UnsupportedEncodingException {
 		
 		// explicit nonce
         byte [] theNonce = TweetNaclFast.makeSecretBoxNonce();
@@ -403,20 +364,14 @@ public final class TweetNaclFastTest {
 				mbat += " "+mba[i];
 			Log.d(TAG, mbat);
 */
-			
+
 			String nm0 = new String(mba, "utf-8");
-			if (nm0.equals(m0)) {
-				Log.d(TAG, "\tsecret box/open succes (with nonce)");
-			} else {
-				Log.e(TAG, "\tsecret box/open failed (with nonce) @" + m0 + " / " + nm0);
-				return false;
-			}
+			assertEquals("secret box/open failed (with nonce)", nm0, m0);
 		}
-		
-		return true;
 	}
 	
-	private boolean testSign() throws UnsupportedEncodingException {
+	@Test
+	public void testSign() throws UnsupportedEncodingException {
 		// keypair A
 		TweetNaclFast.Signature.KeyPair ka = TweetNaclFast.Signature.keyPair();
 
@@ -433,29 +388,22 @@ public final class TweetNaclFastTest {
 		String m0 = "Helloword, Am Tom ...";
 
 		// signature A -> B
-        Log.d(TAG, "\nsign...@" + System.currentTimeMillis());
+		Log.d(TAG, "\nsign...@" + System.currentTimeMillis());
 		byte [] sab = pab.sign(m0.getBytes("utf-8"));
-        Log.d(TAG, "...sign@" + System.currentTimeMillis());
+		Log.d(TAG, "...sign@" + System.currentTimeMillis());
 
 		String sgt = "sign@"+m0 + ": ";
 		for (int i = 0; i < TweetNaclFast.Signature.signatureLength; i ++)
 			sgt += " "+sab[i];
 		Log.d(TAG, sgt);
 		
-        Log.d(TAG, "verify...@" + System.currentTimeMillis());
+		Log.d(TAG, "verify...@" + System.currentTimeMillis());
 		byte [] oba = pba.open(sab);
-        Log.d(TAG, "...verify@" + System.currentTimeMillis());
+		Log.d(TAG, "...verify@" + System.currentTimeMillis());
 
-		if (oba == null) {
-			Log.e(TAG, "verify failed @" + m0);
-		} else {
-			String nm0 = new String(oba, "utf-8");
-			if (nm0.equals(m0)) {
-				Log.d(TAG, "sign success @" + m0);
-			} else {
-				Log.e(TAG, "sign failed @" + m0 + " / " + nm0);
-			}
-		}
+		assertNotNull("verify failed", oba);
+		String nm0 = new String(oba, "utf-8");
+		assertEquals ("sign failed", nm0, m0);
 		
 		// keypair C
 		byte [] seed = new byte[TweetNaclFast.Signature.seedLength]; for (int i = 0; i < seed.length; i ++) seed[i] = 0x66;
@@ -487,25 +435,17 @@ public final class TweetNaclFastTest {
 		Log.d(TAG, "self-verify...@" + System.currentTimeMillis());
 		byte [] occ = pcc.open(scc);
 		Log.d(TAG, "...self-verify@" + System.currentTimeMillis());
-		
-		if (occ == null) {
-			Log.e(TAG, "self-verify failed @" + m0);
-		} else {
-			String nm0 = new String(occ, "utf-8");
-			if (nm0.equals(m0)) {
-				Log.d(TAG, "self-sign success @" + m0);
-			} else {
-				Log.e(TAG, "self-sign failed @" + m0 + " / " + nm0);
-			}
-		}
-		
-		return true;
+
+		assertNotNull("self-verify failed", occ);
+		nm0 = new String(occ, "utf-8");
+		assertEquals ("self-sign failed", nm0, m0);
 	}
 	
 	/*
 	 * SHA-512
 	 * */
-	private boolean testHash() throws UnsupportedEncodingException {
+	@Test
+	public void testHash() throws UnsupportedEncodingException {
 		String m0 = "Helloword, Am Tom ...";
 		byte [] b0 = m0.getBytes("utf-8");
 		
@@ -517,11 +457,19 @@ public final class TweetNaclFastTest {
 		for (int i = 0; i < hash.length; i ++)
 			hst += " "+hash[i];
 		Log.d(TAG, hst);
-		
-		return true;
 	}
 
-	private boolean testSignDetached(String seedStr) throws UnsupportedEncodingException {
+	@Test
+	public void testSignDetached1() throws UnsupportedEncodingException {
+		testSignDetached("ac49000da11249ea3510941703a7e21a39837c4d2d5300daebbd532df20f8135");
+	}
+
+	@Test
+	public void testSignDetached2() throws UnsupportedEncodingException {
+		testSignDetached("e56f0eef73ade8f79bc1d16a99cbc5e4995afd8c14adb49410ecd957aecc8d02");
+	}
+
+	private void testSignDetached(String seedStr) throws UnsupportedEncodingException {
 		Log.d(TAG, "seed:@" + System.currentTimeMillis());
 
 		byte[] seed = TweetNaclFast.hexDecode(seedStr);
@@ -540,54 +488,12 @@ public final class TweetNaclFastTest {
 		boolean result = s2.detached_verify(bytes,  signature);
 		Log.d(TAG, "...verify@" + System.currentTimeMillis());
 
-		if(result) {
-			Log.d(TAG, "verify success @" + testString);
-		} else {
-			Log.e(TAG, "verify failed @" + testString);
-		}
-
-		return  true;
+		assertTrue("verify failed", result);
 	}
 	/*
 	 * bench test using tweetnacl.c, tweetnacl.js result
 	 * */
-	private boolean testBench() {
-		
-		return true;
+	@Test
+	public void testBench() {
 	}
-	
-	public void start() {		
-		(new Thread(new Runnable() {
-			public void run() {
-				Log.d(TAG, "start test");
-
-				try {
-					///testSecretBox();
-					///testSecretBoxNonce();
-					///testBox();
-					///testBoxNonce();
-					///testBoxKalium();
-					
-					///testHash();
-					///testSign();
-
-					testSignDetached("ac49000da11249ea3510941703a7e21a39837c4d2d5300daebbd532df20f8135");
-					testSignDetached("e56f0eef73ade8f79bc1d16a99cbc5e4995afd8c14adb49410ecd957aecc8d02");
-
-					///testBench();
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}			    
-			}
-		})).start();
-
-	}
-
-  public static void main(String[] args) {
-    TweetNaclFastTest t = new TweetNaclFastTest();
-    t.start();
-  }
-
-
 }
