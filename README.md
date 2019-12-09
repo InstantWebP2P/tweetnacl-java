@@ -71,7 +71,7 @@ In top directory:
 
 ### Support us
 
-* 远程工作云办公联盟 QQ 群号: 463651269
+* Welcome contributing on document, codes, tests and issues
 
 
 
