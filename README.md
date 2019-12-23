@@ -77,6 +77,6 @@ In top directory:
 
 ### License MIT
 
-* Copyright(2014-2017) by tom zhou, iwebpp@gmail.com
+* Copyright(2014-present) by tom zhou, iwebpp@gmail.com
 
 
