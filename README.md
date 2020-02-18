@@ -1,5 +1,5 @@
-Fast Curve Crypto Library - TweetNacl in Java
-=================================================
+Fast Curve Crypto Library - TweetNacl in Java: [port of tweetnacl-js](https://github.com/dchest/tweetnacl-js)
+====================================================================
 
 
 ### API/Usage
