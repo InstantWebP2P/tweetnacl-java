@@ -1,6 +1,7 @@
-Fast Curve Crypto Library - TweetNacl in Java: [port of tweetnacl-js](https://github.com/dchest/tweetnacl-js)
+TweetNacl in Java: [port of tweetnacl-js](https://github.com/dchest/tweetnacl-js)
 ====================================================================
 
+![Java CI](https://github.com/InstantWebP2P/tweetnacl-java/workflows/Java%20CI/badge.svg)
 
 ### API/Usage
 
