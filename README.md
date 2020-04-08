@@ -5,7 +5,7 @@ TweetNacl in Java: port of [tweetnacl-js](https://github.com/dchest/tweetnacl-js
 
 ### API/Usage
 
-### Suggest always use TweetNaclFast implementation
+### Suggest always use [TweetNaclFast](https://github.com/InstantWebP2P/tweetnacl-java/blob/master/src/main/java/com/iwebpp/crypto/TweetNaclFast.java) implementation
 
 #### Public key authenticated encryption
 
