@@ -2,3 +2,8 @@ out/*
 
 # Maven
 target/
+build
+*.iml
+.gradle
+/local.properties
+/.idea
