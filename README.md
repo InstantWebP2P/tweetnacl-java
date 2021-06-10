@@ -8,7 +8,7 @@ TweetNacl in Java: port of [tweetnacl-js](https://github.com/dchest/tweetnacl-js
 #### Using Gradle
 
 ```
-implementation "io.github.sequoiar:tweetnacl-java:1.1.2"
+implementation "io.github.instantwebp2p:tweetnacl-java:1.1.2"
 ```
 
 ### API/Usage
