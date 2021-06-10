@@ -3,6 +3,14 @@ TweetNacl in Java: port of [tweetnacl-js](https://github.com/dchest/tweetnacl-js
 
 ![Java CI](https://github.com/InstantWebP2P/tweetnacl-java/workflows/Java%20CI/badge.svg)
 
+### Download
+
+#### Using Gradle
+
+```
+implementation "io.github.sequoiar:tweetnacl-java:1.1.2"
+```
+
 ### API/Usage
 
 ### Suggest always use [TweetNaclFast](https://github.com/InstantWebP2P/tweetnacl-java/blob/master/src/main/java/com/iwebpp/crypto/TweetNaclFast.java) implementation
