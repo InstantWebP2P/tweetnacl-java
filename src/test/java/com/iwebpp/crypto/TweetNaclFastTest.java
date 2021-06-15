@@ -160,16 +160,16 @@ public final class TweetNaclFastTest {
 		assertEquals("box/open string failed", nm0, m0);
 
 		// cipher B -> A
-		byte [] b0 = new byte[100*1000000];
+		byte [] b0 = new byte[100*100000];
 		for (int i = 0; i < b0.length; i ++)
 			b0[i] = (byte)i;
 
-		Log.d(TAG, "big of 100M  box@" + System.currentTimeMillis());
+		Log.d(TAG, "big of 10M  box@" + System.currentTimeMillis());
 		byte [] cba = pba.box(b0);
 		byte [] mab = pab.open(cba);
 		Log.d(TAG, "big of 100M open@" + System.currentTimeMillis());
 
-		assertArrayEquals("big of 100M box/open binary failed", b0 ,mab);
+		assertArrayEquals("big of 10M box/open binary failed", b0 ,mab);
 
 	}
 
