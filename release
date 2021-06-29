@@ -4,7 +4,7 @@
 
 if ! grep -q -- "VERSION_NAME=.*-SNAPSHOT" gradle.properties;
 then
-./gradlew closeAndReleaseRepository --repository iogithubinstantwebp2p-1000
+./gradlew closeAndReleaseRepository
 else
 echo "Nothing else to do for a snapshot"
 fi
